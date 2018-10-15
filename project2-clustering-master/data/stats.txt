@@ -1,0 +1,12 @@
+{
+  "airplane": 196,
+  "automobile": 198,
+  "bird": 195,
+  "cat": 199,
+  "deer": 198,
+  "dog": 185,
+  "frog": 216,
+  "horse": 193,
+  "ship": 217,
+  "truck": 203
+}
