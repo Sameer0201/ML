@@ -1,0 +1,757 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{assignment\_1c}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{part-1c-information-gain-for-decision-trees}{%
+\section{Part 1c: Information Gain for Decision
+Trees}\label{part-1c-information-gain-for-decision-trees}}
+
+\textbf{DUE September 17th 2018}
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+The code for this project consists of several Python files, some of
+which you will need to read and understand in order to complete the
+assignment, and some of which you can ignore.
+
+\hypertarget{files-youll-edit}{%
+\subsubsection{Files You'll Edit}\label{files-youll-edit}}
+
+\texttt{assignment\_1c.ipynb}: Will be your edited copy of this notebook
+pertaining to part 1c of the assignment.
+
+\hypertarget{files-you-might-want-to-look-at}{%
+\subsubsection{Files you might want to look
+at}\label{files-you-might-want-to-look-at}}
+
+\texttt{binary.py}: Our generic interface for binary classifiers
+(actually works for regression and other types of classification, too).
+
+\texttt{datasets.py}: Where a handful of test data sets are stored.
+
+\texttt{util.py}: A handful of useful utility functions: these will
+undoubtedly be helpful to you, so take a look!
+
+\texttt{runClassifier.py}: A few wrappers for doing useful things with
+classifiers, like training them, generating learning curves, etc.
+
+\texttt{mlGraphics.py}: A few useful plotting commands
+
+\texttt{data/*}: all of the datasets we'll use.
+
+\hypertarget{what-to-submit}{%
+\subsubsection{What to Submit}\label{what-to-submit}}
+
+You will hand in all of the python files listed above under ``Files
+you'll edit''. You will also have to answer the written questions in
+this notebook denoted \textbf{Q\#:} in the corresponding cells denoted
+with \textbf{A\#:}.
+
+\hypertarget{autograding}{%
+\paragraph{Autograding}\label{autograding}}
+
+Your code will be autograded for technical correctness. Please
+\textbf{do not} change the names of any provided functions or classes
+within the code, or you will wreak havoc on the autograder. However, the
+correctness of your implementation -- not the autograder's output --
+will be the final judge of your score. If necessary, we will review and
+grade assignments individually to ensure that you receive due credit for
+your work.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Jupyter magic!}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    Your first task is to write code to support the use of the information
+gain splitting criterion for decision tree learning. \textbf{You should
+now complete all lines marked \texttt{TODO} in \texttt{dt.py}, so that
+our code handles both splitting criteria (misclassification rate and
+information gain).} Once you've done that, we can test our code for the
+new splitting criterion:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{dumbClassifiers}\PY{o}{,} \PY{n+nn}{datasets}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{runClassifier}
+        \PY{k+kn}{import} \PY{n+nn}{dt} \PY{k}{as} \PY{n+nn}{dt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{h} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+        \PY{n}{h}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} Leaf 1
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} TODO: Implement dt.train(...)                                                \PYZsh{}}
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        \PY{n}{h}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{datasets}\PY{o}{.}\PY{n}{TennisData}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{TennisData}\PY{o}{.}\PY{n}{Y}\PY{p}{)}
+        \PY{n}{h}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} Branch 5 [Gain='1.6629']
+          Leaf 1.0
+          Leaf 1.0
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{from} \PY{n+nn}{numpy} \PY{k}{import} \PY{o}{*}
+        
+        \PY{k+kn}{from} \PY{n+nn}{binary} \PY{k}{import} \PY{o}{*}
+        \PY{n}{c} \PY{o}{=} \PY{l+m+mf}{0.6428571428571429}
+        \PY{p}{(}\PY{n}{c}\PY{o}{*}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{c}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{p}{)}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} -0.9402859586706311
+\end{Verbatim}
+            
+    This is for a simple depth-one decision tree (aka a decision stump).
+Notice how we print the information gain corresponding to each branch in
+the tree.
+
+If we let it get deeper, we get things like:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{h} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+        \PY{n}{h}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{datasets}\PY{o}{.}\PY{n}{TennisData}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{TennisData}\PY{o}{.}\PY{n}{Y}\PY{p}{)}
+        \PY{n}{h}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} Branch 5 [Gain='1.6629']
+          Branch 2 [Gain='1.7286']
+            Leaf 1.0
+            Leaf 1.0
+          Branch 6 [Gain='1.6226']
+            Leaf 1.0
+            Leaf 1.0
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{h} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+        \PY{n}{h}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{datasets}\PY{o}{.}\PY{n}{TennisData}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{TennisData}\PY{o}{.}\PY{n}{Y}\PY{p}{)}
+        \PY{n}{h}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} Branch 5 [Gain='1.6629']
+          Branch 2 [Gain='1.7286']
+            Branch 7 [Gain='1.7320']
+              Branch 6 [Gain='1.6085']
+                Leaf 1.0
+                Branch 4 [Gain='1.5305']
+                  Leaf -1.0
+                  Leaf -1.0
+              Branch 1 [Gain='1.5305']
+                Branch 0 [Gain='2.0000']
+                  Leaf 1.0
+                  Leaf -1.0
+                Leaf 1.0
+            Branch 3 [Gain='1.8366']
+              Leaf 1.0
+              Leaf 1.0
+          Leaf 1.0
+\end{Verbatim}
+            
+    We can do something similar on the sentiment data (this will take a bit
+longer---it takes about 10 seconds on my laptop):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{h} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+        \PY{n}{h}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{Y}\PY{p}{)}
+        \PY{n}{h}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} Branch 8160 [Gain='1.9991']
+          Branch 8151 [Gain='1.9991']
+            Leaf 1.0
+            Leaf 1.0
+          Leaf 1.0
+\end{Verbatim}
+            
+    We can look up the words (your results here might be different due to
+hashing):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+m+mi}{626}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{words}\PY{p}{[}\PY{l+m+mi}{626}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+m+mi}{683}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{words}\PY{p}{[}\PY{l+m+mi}{683}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+m+mi}{1627}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{words}\PY{p}{[}\PY{l+m+mi}{1627}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+626 bad
+683 worst
+1627 stupid
+
+    \end{Verbatim}
+
+    Based on this, we can rewrite the tree (by hand) as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Branch }\StringTok{'bad'}
+\NormalTok{  Branch }\StringTok{'worst'}
+\NormalTok{    Leaf }\FloatTok{1.0}
+\NormalTok{    Leaf }\FloatTok{-1.0}
+\NormalTok{  Branch }\StringTok{'stupid'}
+\NormalTok{    Leaf }\FloatTok{-1.0}
+\NormalTok{    Leaf }\FloatTok{-1.0}
+\end{Highlighting}
+\end{Shaded}
+
+    Now, we will test prediction (this takes about a minute for me):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         \PY{c+c1}{\PYZsh{} TODO: Implement dt.predict(...)                                              \PYZsh{}}
+         \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         \PY{n}{runClassifier}\PY{o}{.}\PY{n}{trainTestSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+         \PY{n}{runClassifier}\PY{o}{.}\PY{n}{trainTestSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+         \PY{n}{runClassifier}\PY{o}{.}\PY{n}{trainTestSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training accuracy 0.504167, test accuracy 0.5025
+Training accuracy 0.505, test accuracy 0.4975
+Training accuracy 0.505833, test accuracy 0.5025
+
+    \end{Verbatim}
+
+    We can use more \texttt{runClassifier} functions to generate learning
+curves and hyperparameter curves:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{curveIG} \PY{o}{=} \PY{n}{runClassifier}\PY{o}{.}\PY{n}{learningCurveSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+         \PY{n}{runClassifier}\PY{o}{.}\PY{n}{plotCurve}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DT on Sentiment Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{curveIG}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training classifier on 2 points{\ldots}
+Training accuracy 0.5, test accuracy 0.5025
+Training classifier on 3 points{\ldots}
+Training accuracy 0.666667, test accuracy 0.5025
+Training classifier on 5 points{\ldots}
+Training accuracy 0.6, test accuracy 0.5025
+Training classifier on 10 points{\ldots}
+Training accuracy 0.7, test accuracy 0.5025
+Training classifier on 19 points{\ldots}
+Training accuracy 0.526316, test accuracy 0.4975
+Training classifier on 38 points{\ldots}
+Training accuracy 0.5, test accuracy 0.5025
+Training classifier on 75 points{\ldots}
+Training accuracy 0.506667, test accuracy 0.5025
+Training classifier on 150 points{\ldots}
+Training accuracy 0.54, test accuracy 0.4925
+Training classifier on 300 points{\ldots}
+Training accuracy 0.513333, test accuracy 0.4925
+Training classifier on 600 points{\ldots}
+Training accuracy 0.501667, test accuracy 0.5025
+Training classifier on 1200 points{\ldots}
+Training accuracy 0.505833, test accuracy 0.4925
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This plots training and test accuracy as a function of the number of
+data points (x-axis) used for training and y-axis is accuracy.
+
+    Now let's compare information gain with misclassification rate. First
+we'll generate the learning curve for misclassification rate again. Then
+we'll plot the curves on the same graph.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{curveMR} \PY{o}{=} \PY{n}{runClassifier}\PY{o}{.}\PY{n}{learningCurveSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{9}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+         \PY{n}{runClassifier}\PY{o}{.}\PY{n}{plotCurvePair}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DT on Sentiment Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{curveIG}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{IG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{curveMR}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training classifier on 2 points{\ldots}
+Training accuracy 1, test accuracy 0.5
+Training classifier on 3 points{\ldots}
+Training accuracy 1, test accuracy 0.5
+Training classifier on 5 points{\ldots}
+Training accuracy 1, test accuracy 0.5
+Training classifier on 10 points{\ldots}
+Training accuracy 1, test accuracy 0.595
+Training classifier on 19 points{\ldots}
+Training accuracy 1, test accuracy 0.48
+Training classifier on 38 points{\ldots}
+Training accuracy 1, test accuracy 0.62
+Training classifier on 75 points{\ldots}
+Training accuracy 1, test accuracy 0.56
+Training classifier on 150 points{\ldots}
+Training accuracy 0.953333, test accuracy 0.56
+Training classifier on 300 points{\ldots}
+Training accuracy 0.926667, test accuracy 0.575
+Training classifier on 600 points{\ldots}
+Training accuracy 0.881667, test accuracy 0.5975
+Training classifier on 1200 points{\ldots}
+Training accuracy 0.833333, test accuracy 0.6475
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{Q1:} Briefly compare the two \textbf{training} curves. Does
+either splitting criterion perform better than the other for small
+dataset size (say, N\textless{}200)? Why or why not? How about as N
+increases to 1200? Use your understanding of both criteria to answer
+these questions.
+
+    \textbf{A1:} For training the results are unusual. It shows higher
+training accuracy than when N is incresed. Which is similar to part 1a
+where for less data the model is very well unfitted. This covers less
+cases and the training accuracy is around 1.
+
+    \textbf{Q2:} Briefly compare the two \textbf{test} curves. Does either
+splitting criterion lead to better generalization than the other for
+small dataset size (say, N\textless{}200)? Why or why not? How about as
+N increases to 1200? Use your understanding of both criteria to answer
+these questions.
+
+    \textbf{A2:} When the dataset size is low, the splititng criterion
+doesn't perform well as there is low test accuracy. It improves as N is
+increased as it increases the dataset for both testing and training,
+which allows a more comprehensive learning.
+
+    We can also generate similar curves by changing the maximum depth
+hyperparameter:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{curveIG} \PY{o}{=} \PY{n}{runClassifier}\PY{o}{.}\PY{n}{hyperparamCurveSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{]}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+         \PY{n}{curveMR} \PY{o}{=} \PY{n}{runClassifier}\PY{o}{.}\PY{n}{hyperparamCurveSet}\PY{p}{(}\PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{]}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{p}{)}
+         \PY{n}{runClassifier}\PY{o}{.}\PY{n}{plotCurvePair}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DT on Sentiment Data (hyperparameter)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{curveIG}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{IG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{curveMR}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training classifier with maxDepth=1{\ldots}
+Training accuracy 0.504167, test accuracy 0.5025
+Training classifier with maxDepth=2{\ldots}
+Training accuracy 0.504167, test accuracy 0.5025
+Training classifier with maxDepth=4{\ldots}
+Training accuracy 0.505833, test accuracy 0.5025
+Training classifier with maxDepth=6{\ldots}
+Training accuracy 0.505833, test accuracy 0.5025
+Training classifier with maxDepth=8{\ldots}
+Training accuracy 0.505833, test accuracy 0.4925
+Training classifier with maxDepth=12{\ldots}
+Training accuracy 0.505833, test accuracy 0.4925
+Training classifier with maxDepth=16{\ldots}
+Training accuracy 0.505833, test accuracy 0.4925
+Training classifier with maxDepth=1{\ldots}
+Training accuracy 0.630833, test accuracy 0.595
+Training classifier with maxDepth=2{\ldots}
+Training accuracy 0.6675, test accuracy 0.5825
+Training classifier with maxDepth=4{\ldots}
+Training accuracy 0.7325, test accuracy 0.6375
+Training classifier with maxDepth=6{\ldots}
+Training accuracy 0.789167, test accuracy 0.635
+Training classifier with maxDepth=8{\ldots}
+Training accuracy 0.823333, test accuracy 0.6475
+Training classifier with maxDepth=12{\ldots}
+Training accuracy 0.863333, test accuracy 0.6425
+Training classifier with maxDepth=16{\ldots}
+Training accuracy 0.888333, test accuracy 0.625
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Now, the x-axis is the value of the maximum depth.
+
+    \textbf{Q3:} Briefly compare the two \textbf{training} curves. Does
+either splitting criterion perform better than the other for shallow
+depth (say, \texttt{maxDepth}\textless{}10)? Why or why not? How about
+as \texttt{maxDepth} increases to 16? Use your understanding of both
+criteria to answer these questions.
+
+    \textbf{A3:} For training curves, the accuracy increases as there is
+more depth for the data to be fit in which allows for better training
+accuracy. Data can be better fitted when there is more space but while
+testing it gives the same result.
+
+    \textbf{Q4:} Briefly compare the two \textbf{test} curves. Does either
+splitting criterion lead to better generalization than the other for
+shallow depth (say, \texttt{maxDepth}\textless{}10)? Why or why not? How
+about as \texttt{maxDepth} increases to 16? Use your understanding of
+both criteria to answer these questions.
+
+    \textbf{A4:} The test curve depict that the accuracy is slightly higher
+when maxDepth \textless{}10. This is due to the fact that the model has
+similar end points.
+
+    Now we will display a tree trained using information gain. Beside each
+branch, we print out the information gain corresponding to the split.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{h} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{DT}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maxDepth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{criterion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ig}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+         \PY{n}{h}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{Y}\PY{p}{)}
+         \PY{n}{h}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} Branch 8160 [Gain='1.9991']
+           Branch 8151 [Gain='1.9991']
+             Branch 8152 [Gain='1.9991']
+               Branch 8150 [Gain='1.9991']
+                 Branch 8159 [Gain='1.9982']
+                   Leaf 1.0
+                   Leaf 1.0
+                 Leaf -1.0
+               Leaf -1.0
+             Leaf 1.0
+           Leaf 1.0
+\end{Verbatim}
+            
+    Let's print some of the features, so we can see which words this tree
+uses to make decisions. I've looked up word indexed at \texttt{626}, but
+you can go ahead and edit as needed.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+m+mi}{626}\PY{p}{,} \PY{n}{datasets}\PY{o}{.}\PY{n}{SentimentData}\PY{o}{.}\PY{n}{words}\PY{p}{[}\PY{l+m+mi}{626}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+626 bad
+
+    \end{Verbatim}
+
+    \textbf{Q5:} Look up some words used in the tree. Find a few
+representative words that seem \emph{helpful} (contributing to higher
+accuracy) in this classification task, and a few representative words
+that seem \emph{unhelpful}. Do you notice a correlation between
+information gain and the quality of the word in this task? Why or why
+not?
+
+    \textbf{A5:} Yes, there is a correlation between information gain and
+quality of the word in the task. The information gain will be higher for
+words which help in classification because there is actual information
+gained with correlation to that word than some other word.
+
+    \textbf{Q6:} Should we expect a significant change in test accuracy if
+we prune subtrees rooted at nodes corresponding to low information gain?
+Why or why not?
+
+    \textbf{A6:} There won't be much significant change in test accuracy if
+we prune subtrees at low information gain as long as their info gain
+\textgreater{}= 0. The won't affect the computation but negative info
+gain can cause results which are far from the truth.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

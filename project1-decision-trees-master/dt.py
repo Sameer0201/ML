@@ -6,7 +6,7 @@ it's easier to code than the information-based metrics).
 """
 
 from numpy import *
-
+import numpy as np
 from binary import *
 import util
 
@@ -73,10 +73,10 @@ class DT(BinaryClassifier):
         if(self.isLeaf):
             return repr(self.label)
         else:
-            if [self.feature] >= 0.5:
+            if X[self.feature] >= 0.5:
                 return self.right.predict(X)
             else:
-                return self.left.predict(Y)
+                return self.left.predict(X)
 
 
     def trainDT(self, X, Y, maxDepth, criterion, used):
@@ -101,7 +101,15 @@ class DT(BinaryClassifier):
             if criterion == 'ig': # information gain
                 # compute the entropy at this node
                 ### TODO: YOUR CODE HERE
-                self.entropy = util.raiseNotDefined()
+                class1 = util.mode(Y)
+                count1 = 0
+                for x in Y:
+                    if x == class1:
+                        count1 += 1
+                count1 = count1/Y.size
+                count2 = 1 - count1
+                ent = count1*math.log(count1,2) + count2*math.log(count2,2)
+                self.entropy = -1 * ent
             
             # we need to find a feature to split on
             bestFeature = -1     # which feature has lowest error
@@ -131,7 +139,17 @@ class DT(BinaryClassifier):
                     # we'll classify the left points as their most
                     # common class and ditto right points.  our error
                     # is the how many are not their mode.
-                    error = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                    leftMode = util.mode(leftY)
+                    rightMode = util.mode(rightY)
+                    count = 0
+                    for x in leftY:
+                        if(leftMode != x):
+                            count += 1
+                    for x in rightY:
+                        if(rightMode != x):
+                            count += 1
+                            
+                    error = count/X[:,d].size    ### TODO: YOUR CODE HERE
                     
                     # update min, max, bestFeature
                     if error <= bestError:
@@ -141,7 +159,30 @@ class DT(BinaryClassifier):
                 # information gain
                 elif criterion == 'ig':
                     # now use information gain
-                    gain = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                    leftMode = util.mode(leftY)
+                    rightMode = util.mode(rightY)
+                    
+                    countLeft = 0
+                    for x in leftY:
+                        if(leftMode != x):
+                            countLeft += 1
+                    if(countLeft == 0):
+                        leftEnt = 0
+                    else:
+                        countLeft = countLeft/leftY.size
+                        leftEnt = (countLeft)*math.log(countLeft,2)+(1-countLeft)*math.log((1-countLeft),2)
+                    
+                    countRight = 0
+                    for x in rightY:
+                        if(rightMode != x):
+                            countRight += 1
+                    
+                    if(countRight == 0):
+                        rightEnt = 0
+                    else:
+                        countRight = countRight/rightY.size
+                        rightEnt = (countRight)*math.log(countRight,2)+(1-countRight)*math.log((1-countRight),2)
+                    gain = self.entropy - ((leftY.size*leftEnt)+(rightY.size*rightEnt))/X[:,d].size    ### TODO: YOUR CODE HERE
                     
                     # update min, max, bestFeature
                     if gain >= bestGain:
@@ -155,9 +196,9 @@ class DT(BinaryClassifier):
                 self.label  = util.mode(Y)
 
             else:
-                self.isLeaf  = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                self.isLeaf  = False    ### TODO: YOUR CODE HERE
 
-                self.feature = util.raiseNotDefined()    ### TODO: YOUR CODE HERE
+                self.feature = bestFeature    ### TODO: YOUR CODE HERE
 
 
                 self.left  = DT({'maxDepth': maxDepth-1, 'criterion':criterion})
@@ -168,7 +209,17 @@ class DT(BinaryClassifier):
                 #   self.right.trainDT(...) 
                 # with appropriate arguments
                 ### TODO: YOUR CODE HERE
-                util.raiseNotDefined()
+                
+                used += [self.feature]
+                
+                leftX = X[X[:, self.feature] < 0.5]
+                rightX = X[X[:, self.feature] >= 0.5]
+                
+                leftY = Y[X[:, self.feature] < 0.5]
+                rightY = Y[X[:, self.feature] >= 0.5]
+                
+                self.left.trainDT(leftX, leftY, self.left.opts['maxDepth'], self.opts['criterion'], used)
+                self.right.trainDT(rightX, rightY, self.right.opts['maxDepth'], self.opts['criterion'], used)
 
     def train(self, X, Y):
         """
